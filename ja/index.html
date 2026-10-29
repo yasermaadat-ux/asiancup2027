@@ -252,4 +252,54 @@ function renderSum(){const s=summary();const lines=[];
  if(s.champ)lines.push('私のアジアカップ2027の優勝予想：'+s.champ);
  if(s.fin[0]&&s.fin[1])lines.push('決勝：'+s.fin[0]+' × '+s.fin[1]);
  if(s.sf.length===4)lines.push('ベスト4：'+s.sf.join('、'));
- if(s.done)lines.
+ if(s.done)lines.push('グループ首位：'+s.winners.join(' · '));
+ $('sumTxt').innerHTML=lines.length?lines.map(l=>'<div>'+l+'</div>').join(''):'予想を完成させると、ここにカードが表示される。';
+ $('saveImg').disabled=!s.champ;$('copyTxt').disabled=!lines.length;
+ drawCard(s)}
+
+/* ---------- share card ---------- */
+const CV=document.createElement('canvas');CV.width=1080;CV.height=1350;
+function drawCard(s){const c=CV.getContext('2d');c.direction='ltr';c.textAlign='center';
+ const g=c.createRadialGradient(540,500,80,540,600,1000);g.addColorStop(0,'#1a3566');g.addColorStop(1,'#080f1e');c.fillStyle=g;c.fillRect(0,0,1080,1350);
+ c.strokeStyle='#c8a84b';c.lineWidth=4;c.strokeRect(36,36,1008,1278);
+ const F=(px,w)=>`${w||700} ${px}px "Noto Sans JP", "Hiragino Sans", Meiryo, sans-serif`;
+ c.fillStyle='#c8a84b';c.font=F(34,600);c.fillText('私のアジアカップ2027予想',540,130);
+ c.fillStyle='#fff';c.font=F(46,800);c.fillText('優勝',540,260);
+ if(s.champ){c.fillStyle='#FFD700';c.font=F(s.champ.length>10?120:150,800);c.fillText(s.champ,540,430)}
+ else{c.fillStyle='#8a97b8';c.font=F(60,600);c.fillText('ブラケットを完成させよう',540,420)}
+ c.fillStyle='#c8a84b';c.fillRect(300,490,480,3);
+ c.fillStyle='#fff';c.font=F(40,700);c.fillText('決勝',540,580);
+ c.font=F(58,800);c.fillStyle='#f2efe6';
+ c.fillText(s.fin[0]&&s.fin[1]?s.fin[0]+'  ×  '+s.fin[1]:'—',540,670);
+ c.fillStyle='#fff';c.font=F(40,700);c.fillText('ベスト4',540,790);
+ c.font=F(44,600);c.fillStyle='#f2efe6';
+ if(s.sf.length===4){c.fillText(s.sf[0]+'  ·  '+s.sf[1],540,860);c.fillText(s.sf[2]+'  ·  '+s.sf[3],540,925)}else c.fillText('—',540,860);
+ if(s.done){c.fillStyle='#fff';c.font=F(34,700);c.fillText('グループ首位',540,1030);c.fillStyle='#f2efe6';c.font=F(30,600);
+  const w=s.winners;c.fillText(w.slice(0,3).map(x=>x.split(': ')[1]).join('  ·  '),540,1085);c.fillText(w.slice(3).map(x=>x.split(': ')[1]).join('  ·  '),540,1135)}
+ c.fillStyle='#c8a84b';c.font=F(30,600);c.fillText('書籍『アジアカップ2027 ガイドブック』付属 · ヤーセル・マアダート',540,1235);
+ c.fillStyle='#8a97b8';c.font=F(24,400);c.fillText('独立系・非公式のツール',540,1280);
+ try{$('cardimg').src=CV.toDataURL('image/png')}catch(e){}}
+function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,2600)}
+$('saveImg').onclick=async()=>{const blob=await new Promise(r=>CV.toBlob(r,'image/png'));const fn='my_asian_cup_2027_predictions.png';
+ try{const d=(typeof claude!=='undefined'&&claude.use)?await claude.use('downloads'):null;
+  if(d){await d.save({filename:fn,data:blob});return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)
+ }catch(e){if(!e||e.code!=='declined')toast('保存できなかった。画像を長押しして保存してほしい。')}};
+$('copyTxt').onclick=async()=>{const s=summary();const L=['私のアジアカップ2027予想'];if(s.champ)L.push('優勝：'+s.champ);if(s.fin[0]&&s.fin[1])L.push('決勝：'+s.fin[0]+' × '+s.fin[1]);if(s.sf.length===4)L.push('ベスト4：'+s.sf.join('、'));L.push('書籍『アジアカップ2027 ガイドブック』（ヤーセル・マアダート著、独立系・非公式の書籍）より');
+ try{await navigator.clipboard.writeText(L.join('\n'));toast('コピーした')}catch(e){toast('自動でコピーできなかった')}};
+
+/* ---------- controls ---------- */
+function update(){GS().forEach(renderGroup);renderThirds();const n=S.scores.filter(Boolean).length,k=koCount();
+ $('pg1').textContent=n+' / 36';$('f1').style.width=(n/36*100)+'%';$('pg2').textContent=k+' / 15';$('f2').style.width=(k/15*100)+'%';
+ renderKO();renderSum()}
+function setScore(i,a,b){S.scores[i]=[a,b];$('s'+i+'h').value=a;$('s'+i+'a').value=b}
+const pickG=()=>{const w=[0,0,0,1,1,1,1,2,2,2,3,4];return w[Math.floor(Math.random()*w.length)]};
+$('rndG').onclick=()=>{M.forEach((m,i)=>{if(!S.scores[i])setScore(i,pickG(),pickG())});save();update();toast('空いている試合をランダムに埋めた')};
+let clrArm=0;$('clr').onclick=()=>{if(!clrArm){clrArm=1;$('clr').textContent='もう一度押して確認';setTimeout(()=>{clrArm=0;$('clr').textContent='すべてクリア'},3000);return}
+ clrArm=0;$('clr').textContent='すべてクリア';S={scores:Array(36).fill(null),ko:{}};M.forEach((m,i)=>{$('s'+i+'h').value='';$('s'+i+'a').value=''});save();update()};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
+ ['g','k','c'].forEach(p=>$('p-'+p).hidden=p!==b.dataset.p);$('rndG').hidden=b.dataset.p!=='g';window.scrollTo({top:0})});
+buildGroups();update();
+</script>
+</body>
+</html>
