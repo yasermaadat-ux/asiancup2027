@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ja" dir="ltr">
 <head>
@@ -9,7 +10,7 @@
 <meta property="og:locale" content="ja_JP">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}</style>
 <title>アジアカップ2027 予想ツール</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" media="print" onload="this.media='all'">
 <style>
 /* Layout: sticky tab bar; group cards in a responsive grid; knockout as stacked round panels. */
 :root{--bg:#0b1730;--surface:#122448;--surface2:#183060;--line:#27427a;--fg:#f2efe6;--muted:#a9b4cf;--gold:#e3bc4b;--gold-ink:#1a1405;--ok:#58c28a;--warn:#e58c5a;
@@ -252,5 +253,4 @@ function renderSum(){const s=summary();const lines=[];
  if(s.champ)lines.push('私のアジアカップ2027の優勝予想：'+s.champ);
  if(s.fin[0]&&s.fin[1])lines.push('決勝：'+s.fin[0]+' × '+s.fin[1]);
  if(s.sf.length===4)lines.push('ベスト4：'+s.sf.join('、'));
- if(s.done)lines.push('グループ首位：'+s.winners.join(' · '));
- 
+ if(s.done)lines.
