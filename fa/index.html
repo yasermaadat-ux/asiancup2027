@@ -231,4 +231,75 @@ function renderThirds(){const th=thirds();const done=allDone();$('thState').text
  th.forEach((r,i)=>{h+=`<tr class="${done&&i<4?'q1':''}"><td>${i+1}</td><td class="tn">${r.t}</td><td>${GL[r.g]}</td><td>${r.pl}</td><td>${r.gd>0?'+'+r.gd:r.gd}</td><td>${r.gf}</td><td class="pts">${r.p}</td></tr>`});
  $('thTable').innerHTML=h}
 function renderKO(){const B=resolveBracket();const done=allDone();const nG=S.scores.filter(Boolean).length;
- $('gate').hidden=done;$('gate').innerHTML=done?'':`نتایج بازی‌های گروهی را کامل کنید (${nG} از 36) تا نام تیم‌ها در دور ۱۶ تیم ظاهر ش
+ $('gate').hidden=done;$('gate').innerHTML=done?'':`نتایج بازی‌های گروهی را کامل کنید (${nG} از 36) تا نام تیم‌ها در دور ۱۶ تیم ظاهر شود. برای آزمایش می‌توانید از دکمه «پر کردن تصادفی گروه‌ها» استفاده کنید.`;
+ let h='';ROUNDS.forEach(([name,when,ids])=>{h+=`<div class="round ${ids[0]===51?'final':''}"><h3>${name}</h3><p class="when">${when}</p><div class="kg">`;
+  ids.forEach(id=>{const t=B.teams[id],w=B.win[id];h+=`<div class="km"><span class="id">بازی ${id}</span>`;
+   t.forEach((x,k)=>{const can=!!x.team;const cls=w?(w===x.team?'tb won':'tb out'):'tb';
+    h+=`<button class="${cls}" data-m="${id}" data-t="${can?x.team:''}" ${can?'':'disabled'}>${can?x.team:x.label}</button>`});
+   h+='</div>'});h+='</div></div>'});
+ $('ko').innerHTML=h}
+$('ko').addEventListener('click',e=>{const b=e.target.closest('button.tb');if(!b||b.disabled)return;const id=b.dataset.m,t=b.dataset.t;
+ if(S.ko[id]===t)delete S.ko[id];else S.ko[id]=t;
+ // drop picks that no longer fit the bracket
+ const B=resolveBracket();for(const k in S.ko){if(B.win[k]!==S.ko[k])delete S.ko[k]}
+ save();update()});
+
+function koCount(){const B=resolveBracket();return Object.values(B.win).filter(Boolean).length}
+function summary(){const B=resolveBracket();const done=allDone();const champ=B.win[51];
+ const fin=B.teams[51].map(x=>x.team);const sf=[...B.teams[49],...B.teams[50]].map(x=>x.team).filter(Boolean);
+ const winners=done?GS().map(g=>GL[g]+': '+B.rk[g][0].t):[];return{B,done,champ,fin,sf,winners}}
+function renderSum(){const s=summary();const lines=[];
+ if(s.champ)lines.push('قهرمان جام ملت‌های آسیا ۲۰۲۷ در پیش‌بینی من: '+s.champ);
+ if(s.fin[0]&&s.fin[1])lines.push('فینال: '+s.fin[0]+' × '+s.fin[1]);
+ if(s.sf.length===4)lines.push('چهار تیم برتر: '+s.sf.join('، '));
+ if(s.done)lines.push('صدرنشینان گروه‌ها: '+s.winners.join(' · '));
+ $('sumTxt').innerHTML=lines.length?lines.map(l=>'<div>'+l+'</div>').join(''):'پیش‌بینی‌تان را کامل کنید تا کارتتان این‌جا ظاهر شود.';
+ $('saveImg').disabled=!s.champ;$('copyTxt').disabled=!lines.length;
+ drawCard(s)}
+
+/* ---------- share card ---------- */
+const CV=document.createElement('canvas');CV.width=1080;CV.height=1350;
+function drawCard(s){const c=CV.getContext('2d');c.direction='rtl';c.textAlign='center';
+ const g=c.createRadialGradient(540,500,80,540,600,1000);g.addColorStop(0,'#1a3566');g.addColorStop(1,'#080f1e');c.fillStyle=g;c.fillRect(0,0,1080,1350);
+ c.strokeStyle='#c8a84b';c.lineWidth=4;c.strokeRect(36,36,1008,1278);
+ const F=(px,w)=>`${w||700} ${px}px Vazirmatn, "Segoe UI", Tahoma, sans-serif`;
+ c.fillStyle='#c8a84b';c.font=F(34,600);c.fillText('پیش‌بینی من از جام ملت‌های آسیا ۲۰۲۷',540,130);
+ c.fillStyle='#fff';c.font=F(46,800);c.fillText('قهرمان تورنمنت',540,260);
+ if(s.champ){c.fillStyle='#FFD700';c.font=F(s.champ.length>10?120:150,800);c.fillText(s.champ,540,430)}
+ else{c.fillStyle='#8a97b8';c.font=F(60,600);c.fillText('درخت پیش‌بینی را کامل کنید',540,420)}
+ c.fillStyle='#c8a84b';c.fillRect(300,490,480,3);
+ c.fillStyle='#fff';c.font=F(40,700);c.fillText('بازی فینال',540,580);
+ c.font=F(58,800);c.fillStyle='#f2efe6';
+ c.fillText(s.fin[0]&&s.fin[1]?s.fin[0]+'  ×  '+s.fin[1]:'—',540,670);
+ c.fillStyle='#fff';c.font=F(40,700);c.fillText('چهار تیم برتر',540,790);
+ c.font=F(44,600);c.fillStyle='#f2efe6';
+ if(s.sf.length===4){c.fillText(s.sf[0]+'  ·  '+s.sf[1],540,860);c.fillText(s.sf[2]+'  ·  '+s.sf[3],540,925)}else c.fillText('—',540,860);
+ if(s.done){c.fillStyle='#fff';c.font=F(34,700);c.fillText('صدرنشینان گروه‌ها',540,1030);c.fillStyle='#f2efe6';c.font=F(30,600);
+  const w=s.winners;c.fillText(w.slice(0,3).map(x=>x.split(': ')[1]).join('  ·  '),540,1085);c.fillText(w.slice(3).map(x=>x.split(': ')[1]).join('  ·  '),540,1135)}
+ c.fillStyle='#c8a84b';c.font=F(30,600);c.fillText('همراه کتاب «راهنمای شما به جام ملت‌های آسیا ۲۰۲۷» · یاسر معادات',540,1235);
+ c.fillStyle='#8a97b8';c.font=F(24,400);c.fillText('ابزاری مستقل و غیررسمی',540,1280);
+ try{$('cardimg').src=CV.toDataURL('image/png')}catch(e){}}
+function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,2600)}
+$('saveImg').onclick=async()=>{const blob=await new Promise(r=>CV.toBlob(r,'image/png'));const fn='my_asian_cup_2027_predictions.png';
+ try{const d=(typeof claude!=='undefined'&&claude.use)?await claude.use('downloads'):null;
+  if(d){await d.save({filename:fn,data:blob});return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)
+ }catch(e){if(!e||e.code!=='declined')toast('ذخیره نشد. روی تصویر نگه دارید تا ذخیره شود.')}};
+$('copyTxt').onclick=async()=>{const s=summary();const L=['پیش‌بینی من از جام ملت‌های آسیا ۲۰۲۷'];if(s.champ)L.push('قهرمان: '+s.champ);if(s.fin[0]&&s.fin[1])L.push('فینال: '+s.fin[0]+' × '+s.fin[1]);if(s.sf.length===4)L.push('چهار تیم برتر: '+s.sf.join('، '));L.push('از کتاب «راهنمای شما به جام ملت‌های آسیا ۲۰۲۷» نوشته یاسر معادات (کتابی مستقل و غیررسمی)');
+ try{await navigator.clipboard.writeText(L.join('\n'));toast('کپی شد')}catch(e){toast('کپی خودکار انجام نشد')}};
+
+/* ---------- controls ---------- */
+function update(){GS().forEach(renderGroup);renderThirds();const n=S.scores.filter(Boolean).length,k=koCount();
+ $('pg1').textContent=n+' / 36';$('f1').style.width=(n/36*100)+'%';$('pg2').textContent=k+' / 15';$('f2').style.width=(k/15*100)+'%';
+ renderKO();renderSum()}
+function setScore(i,a,b){S.scores[i]=[a,b];$('s'+i+'h').value=a;$('s'+i+'a').value=b}
+const pickG=()=>{const w=[0,0,0,1,1,1,1,2,2,2,3,4];return w[Math.floor(Math.random()*w.length)]};
+$('rndG').onclick=()=>{M.forEach((m,i)=>{if(!S.scores[i])setScore(i,pickG(),pickG())});save();update();toast('بازی‌های خالی به‌صورت تصادفی پر شد')};
+let clrArm=0;$('clr').onclick=()=>{if(!clrArm){clrArm=1;$('clr').textContent='برای تأیید دوباره بزنید';setTimeout(()=>{clrArm=0;$('clr').textContent='پاک کردن همه'},3000);return}
+ clrArm=0;$('clr').textContent='پاک کردن همه';S={scores:Array(36).fill(null),ko:{}};M.forEach((m,i)=>{$('s'+i+'h').value='';$('s'+i+'a').value=''});save();update()};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
+ ['g','k','c'].forEach(p=>$('p-'+p).hidden=p!==b.dataset.p);$('rndG').hidden=b.dataset.p!=='g';window.scrollTo({top:0})});
+buildGroups();update();
+</script>
+</body>
+</html>
