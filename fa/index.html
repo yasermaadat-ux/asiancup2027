@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="ابزار تعاملی رایگان برای ساختن پیش‌بینی خودتان از جام ملت‌های آسیا ۲۰۲۷: نتایج دور گروهی را وارد کنید، برندگان را تا قهرمان انتخاب کنید و کارت پیش‌بینی‌تان را ذخیره کنید.">
+<meta property="og:title" content="پیش‌بینی جام ملت‌های آسیا ۲۰۲۷">
+<meta property="og:description" content="پیش‌بینی خودتان از جام ملت‌های آسیا ۲۰۲۷ را بسازید و با دوستانتان به اشتراک بگذارید. ابزاری مستقل و غیررسمی همراه کتاب «راهنمای شما به جام ملت‌های آسیا ۲۰۲۷».">
+<meta property="og:locale" content="fa_IR">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}</style>
+<title>پیش‌بینی جام ملت‌های آسیا ۲۰۲۷</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" media="print" onload="this.media='all'">
+<style>
+/* Layout: sticky tab bar; group cards in a responsive grid; knockout as stacked round panels. */
+:root{--bg:#0b1730;--surface:#122448;--surface2:#183060;--line:#27427a;--fg:#f2efe6;--muted:#a9b4cf;--gold:#e3bc4b;--gold-ink:#1a1405;--ok:#58c28a;--warn:#e58c5a;
+ --display:"Vazirmatn","Segoe UI",Tahoma,sans-serif;--body:"Vazirmatn","Segoe UI",Tahoma,"DejaVu Sans",sans-serif;color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f2e7;--surface:#ffffff;--surface2:#efe9d8;--line:#d9cfb4;--fg:#0d1b35;--muted:#5b6785;--gold:#8f6a0c;--gold-ink:#fff8e0;--ok:#1c7a4c;--warn:#b35a22;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f6f2e7;--surface:#ffffff;--surface2:#efe9d8;--line:#d9cfb4;--fg:#0d1b35;--muted:#5b6785;--gold:#8f6a0c;--gold-ink:#fff8e0;--ok:#1c7a4c;--warn:#b35a22;color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;padding-block:0 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1100px;margin:0 auto}
+header{padding:28px 0 12px}
+.eyebrow{font-size:13px;letter-spacing:.04em;color:var(--gold);font-weight:600}
+h1{font-family:var(--display);font-size:clamp(30px,6vw,48px);line-height:1.2;margin:4px 0 8px;text-wrap:balance}
+.lead{color:var(--muted);max-width:60ch;margin:0}
+.bars{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+.bar{flex:1 1 220px;min-width:0}
+.bar b{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
+.track{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden}
+.fill{height:100%;background:var(--gold);width:0;transition:width .25s}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line);margin-top:12px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font:inherit;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 18px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-inline-start:auto}
+.btn{font:inherit;font-size:14px;border:1px solid var(--line);background:transparent;color:var(--fg);padding:7px 14px;border-radius:8px;cursor:pointer}
+.btn.pri{background:var(--gold);color:var(--gold-ink);border-color:var(--gold);font-weight:600}
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.nav-in{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+section.pane{padding-top:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,480px),1fr));gap:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.card h2{font-family:var(--display);font-size:22px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:baseline}
+.card h2 small{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:400}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{padding:5px 6px;text-align:center;white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:12px;border-bottom:1px solid var(--line)}
+td.tn{text-align:start;font-weight:600}
+tr.q1 td:first-child,tr.q2 td:first-child{box-shadow:inset -4px 0 0 var(--ok)}
+tr.q3 td:first-child{box-shadow:inset -4px 0 0 var(--warn)}
+td.pts{font-weight:800;color:var(--gold)}
+.ms{margin-top:14px;display:flex;flex-direction:column;gap:2px}
+.m{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)}
+.m .t{font-weight:600;font-size:15px;min-width:0;overflow-wrap:anywhere}
+.m .t.a{text-align:end}
+.sc{display:flex;gap:4px;align-items:center;direction:ltr}
+.sc input{width:44px;height:40px;text-align:center;font:inherit;font-size:18px;font-weight:700;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+.sc input::-webkit-outer-spin-button,.sc input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.meta{grid-column:1/-1;font-size:12px;color:var(--muted);text-align:center;margin-top:-4px}
+.note{font-size:13px;color:var(--muted);margin:10px 0 0}
+.thirds{margin-top:24px}
+.round{margin-bottom:28px}
+.round h3{font-family:var(--display);font-size:20px;margin:0 0 4px}
+.round .when{color:var(--muted);font-size:13px;margin:0 0 10px}
+.kg{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:12px}
+.km{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.km .id{font-size:12px;color:var(--muted)}
+.tb{font:inherit;font-weight:600;text-align:start;padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.tb[disabled]{cursor:default;color:var(--muted);font-weight:400}
+.tb.won{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.tb.out{opacity:.55;text-decoration:line-through}
+.final .km{border-color:var(--gold);border-width:2px}
+.gate{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:16px;margin-bottom:20px}
+.cardwrap{display:grid;grid-template-columns:minmax(0,420px) 1fr;gap:24px;align-items:start}
+@media (max-width:760px){.cardwrap{grid-template-columns:1fr}}
+#cardimg{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);display:block}
+.sum{display:flex;flex-direction:column;gap:12px}
+.sum .btn{align-self:flex-start}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer p{margin:0 0 8px;max-width:75ch}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline:16px;margin:auto;width:fit-content;background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:14px;z-index:20}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<noscript><p style="padding:16px;margin:0;background:#e3bc4b;color:#1a1405;font-family:sans-serif;text-align:center" dir="rtl">این ابزار به جاوااسکریپت نیاز دارد. صفحه را در مرورگری مانند Chrome یا Safari باز کنید، نه در پیش‌نمایش فایل یا درون یک برنامه پیام‌رسان.</p></noscript>
+<div class="wrap" dir="rtl" lang="fa">
+<header>
+ <div class="eyebrow">همراه کتاب «راهنمای شما به جام ملت‌های آسیا ۲۰۲۷»</div>
+ <h1>پیش‌بینی جام ملت‌های آسیا ۲۰۲۷</h1>
+ <p class="lead">نتیجه هر بازی دور گروهی را بنویسید تا جدول خودش مرتب شود و تیم‌های صعودکننده و چهار تیم برتر سوم مشخص شوند. سپس در هر بازی حذفی برنده را انتخاب کنید تا قهرمان خود را بشناسید.</p>
+ <div class="bars">
+  <div class="bar"><b><span>بازی‌های گروهی</span><span id="pg1">0 / 36</span></b><div class="track"><div class="fill" id="f1"></div></div></div>
+  <div class="bar"><b><span>مرحله حذفی</span><span id="pg2">0 / 15</span></b><div class="track"><div class="fill" id="f2"></div></div></div>
+ </div>
+</header>
+<nav><div class="nav-in">
+ <div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-g" aria-selected="true" data-p="g">گروه‌ها</button>
+  <button class="tab" role="tab" id="t-k" aria-selected="false" data-p="k">مرحله حذفی</button>
+  <button class="tab" role="tab" id="t-c" aria-selected="false" data-p="c">کارت من</button>
+ </div>
+ <div class="tools">
+  <button class="btn" id="rndG">پر کردن تصادفی گروه‌ها</button>
+  <button class="btn" id="clr">پاک کردن همه</button>
+ </div>
+</div></nav>
+
+<section class="pane" id="p-g">
+ <div class="grid" id="groups"></div>
+ <div class="card thirds">
+  <h2>رتبه‌بندی تیم‌های سوم <small id="thState"></small></h2>
+  <div class="tw"><table id="thTable"></table></div>
+  <p class="note">چهار تیم برتر سوم از میان شش تیم به دور ۱۶ تیم صعود می‌کنند. ترتیب بر پایه امتیاز، سپس تفاضل گل و سپس گل‌های زده است.</p>
+ </div>
+</section>
+
+<section class="pane" id="p-k" hidden>
+ <div class="gate" id="gate"></div>
+ <div id="ko"></div>
+</section>
+
+<section class="pane" id="p-c" hidden>
+ <div class="cardwrap">
+  <img id="cardimg" alt="کارت پیش‌بینی من از جام ملت‌های آسیا ۲۰۲۷">
+  <div class="sum">
+   <div id="sumTxt" class="lead"></div>
+   <button class="btn pri" id="saveImg">ذخیره کارت به‌صورت تصویر</button>
+   <button class="btn" id="copyTxt">کپی پیش‌بینی به‌صورت متن</button>
+  </div>
+ </div>
+</section>
+
+<footer>
+ <p>ابزاری مستقل و غیررسمی، همراه کتاب «راهنمای شما به جام ملت‌های آسیا ۲۰۲۷». با کنفدراسیون فوتبال آسیا، فدراسیون فوتبال عربستان یا کمیته برگزارکننده ارتباطی ندارد.</p>
+ <p>بازی‌ها و ورزشگاه‌ها و زمان‌ها بر پایه اعلام ۲۱ اکتبر ۲۰۲۶ و به وقت مکه است و ممکن است تغییر کند. زمان مراحل حذفی بازه هر دور است.</p>
+ <p>هنگام تساوی امتیاز: نتایج رویارو (امتیاز، تفاضل گل، گل‌ها)، سپس تفاضل گل کل، سپس گل‌های زده. تساوی کامل با بازی جوانمردانه یا قرعه تعیین می‌شود و در این‌جا بر پایه حروف الفبا مرتب می‌شود. این قواعد دوره‌های پیشین است و آیین‌نامه منتشرشده تورنمنت مرجع می‌ماند.</p>
+ <p>جایگاه تیم‌های سوم در دور ۱۶ تیم از برنامه منتشرشده تورنمنت در <a href="https://en.wikipedia.org/wiki/2027_AFC_Asian_Cup" target="_blank" rel="noopener" style="color:var(--gold)">ویکی‌پدیا</a> گرفته شده است.</p>
+ <p>پیش‌بینی‌های شما تنها در مرورگر خودتان ذخیره می‌شود.</p>
+</footer>
+</div>
+<div class="toast" id="toast" hidden dir="rtl"></div>
+
+<script>
+const GR={A:['عربستان','کویت','عمان','فلسطین'],B:['ازبکستان','بحرین','کره شمالی','اردن'],C:['ایران','سوریه','قرقیزستان','چین'],D:['استرالیا','تاجیکستان','عراق','سنگاپور'],E:['کره جنوبی','امارات','ویتنام','یمن'],F:['ژاپن','قطر','تایلند','اندونزی']};
+const GL={A:'A',B:'B',C:'C',D:'D',E:'E',F:'F'};
+const V={'KF': 'ورزشگاه شهر ورزشی ملک فهد · ریاض', 'KS': 'ورزشگاه دانشگاه ملک سعود · ریاض', 'IM': 'ورزشگاه دانشگاه امام محمد بن سعود · ریاض', 'KA': 'ورزشگاه کینگدم آرنا · ریاض', 'SH': 'ورزشگاه باشگاه الشباب · ریاض', 'AB': 'ورزشگاه شهر ورزشی ملک عبدالله · جده', 'AF': 'ورزشگاه شهر ورزشی امیر عبدالله الفیصل · جده', 'AR': 'ورزشگاه آرامکو · خُبر'};
+// [group, home, away, day, time, venue]
+const M=[
+['A','عربستان','فلسطین','پنج‌شنبه 7 ژانویه','20:00','KF'],
+['B','بحرین','کره شمالی','جمعه 8 ژانویه','13:30','IM'],['A','کویت','عمان','جمعه 8 ژانویه','16:30','KS'],['B','ازبکستان','اردن','جمعه 8 ژانویه','19:30','AB'],
+['D','استرالیا','سنگاپور','شنبه 9 ژانویه','13:30','AR'],['C','ایران','چین','شنبه 9 ژانویه','16:30','KA'],['C','سوریه','قرقیزستان','شنبه 9 ژانویه','19:30','KF'],
+['E','کره جنوبی','یمن','یک‌شنبه 10 ژانویه','13:30','AF'],['D','تاجیکستان','عراق','یک‌شنبه 10 ژانویه','16:30','SH'],
+['F','ژاپن','اندونزی','دوشنبه 11 ژانویه','13:30','AF'],['E','امارات','ویتنام','دوشنبه 11 ژانویه','16:30','KS'],['F','قطر','تایلند','دوشنبه 11 ژانویه','19:30','IM'],
+['A','فلسطین','کویت','سه‌شنبه 12 ژانویه','13:30','AR'],['B','کره شمالی','ازبکستان','سه‌شنبه 12 ژانویه','16:30','KA'],['A','عمان','عربستان','سه‌شنبه 12 ژانویه','19:30','KF'],
+['B','اردن','بحرین','چهارشنبه 13 ژانویه','16:30','AB'],['C','قرقیزستان','ایران','چهارشنبه 13 ژانویه','19:30','SH'],
+['D','عراق','استرالیا','پنج‌شنبه 14 ژانویه','13:30','KS'],['C','چین','سوریه','پنج‌شنبه 14 ژانویه','16:30','AF'],['D','سنگاپور','تاجیکستان','پنج‌شنبه 14 ژانویه','19:30','IM'],
+['E','ویتنام','کره جنوبی','جمعه 15 ژانویه','13:30','KA'],['E','یمن','امارات','جمعه 15 ژانویه','19:30','KF'],
+['F','تایلند','ژاپن','شنبه 16 ژانویه','13:30','SH'],['F','اندونزی','قطر','شنبه 16 ژانویه','19:30','AR'],
+['B','کره شمالی','اردن','یک‌شنبه 17 ژانویه','16:30','IM'],['B','ازبکستان','بحرین','یک‌شنبه 17 ژانویه','16:30','AF'],['A','عمان','فلسطین','یک‌شنبه 17 ژانویه','20:00','KS'],['A','عربستان','کویت','یک‌شنبه 17 ژانویه','20:00','AB'],
+['C','ایران','سوریه','دوشنبه 18 ژانویه','16:30','KF'],['C','قرقیزستان','چین','دوشنبه 18 ژانویه','16:30','KA'],
+['D','استرالیا','تاجیکستان','سه‌شنبه 19 ژانویه','13:30','SH'],['D','عراق','سنگاپور','سه‌شنبه 19 ژانویه','13:30','AR'],
+['F','ژاپن','قطر','چهارشنبه 20 ژانویه','13:30','IM'],['F','تایلند','اندونزی','چهارشنبه 20 ژانویه','13:30','AB'],['E','کره جنوبی','امارات','چهارشنبه 20 ژانویه','16:30','KS'],['E','ویتنام','یمن','چهارشنبه 20 ژانویه','16:30','AF']
+];
+// third-placed allocation: key = four groups, value = group of the third facing 1A,1B,1C,1D
+const ALLOC={ABCD:'CDAB',ABCE:'CABE',ABCF:'CABF',ABDE:'DABE',ABDF:'DABF',ABEF:'EABF',ACDE:'CDAE',ACDF:'CDAF',ACEF:'CAFE',ADEF:'DAFE',BCDE:'CDBE',BCDF:'CDBF',BCEF:'ECBF',BDEF:'EDBF',CDEF:'CDFE'};
+const R16={37:['2A','2C'],38:['1B','T1B'],39:['1D','T1D'],40:['1A','T1A'],41:['1F','2E'],42:['2B','2F'],43:['1E','2D'],44:['1C','T1C']};
+const LATER={45:['W37','W39'],46:['W38','W41'],47:['W44','W43'],48:['W40','W42'],49:['W45','W46'],50:['W47','W48'],51:['W49','W50']};
+const THIRD_OF={T1A:'سوم (C/D/E)',T1B:'سوم (A/C/D)',T1C:'سوم (A/B/F)',T1D:'سوم (B/E/F)'};
+const ROUNDS=[['یک‌هشتم نهایی','22 تا 25 ژانویه',[37,38,39,40,41,42,43,44]],['یک‌چهارم نهایی','28 و 29 ژانویه',[45,46,47,48]],['نیمه‌نهایی','1 فوریه (بازی 49) · 2 فوریه (بازی 50)',[49,50]],['فینال','جمعه 5 فوریه · 20:00 · ورزشگاه شهر ورزشی ملک فهد، ریاض',[51]]];
+const KEY='afc27-fa-predictions-v1';
+let S={scores:Array(36).fill(null),ko:{}};
+try{const r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&Array.isArray(r.scores)&&r.scores.length===36){S.scores=r.scores;S.ko=r.ko||{}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const $=id=>document.getElementById(id);
+
+/* ---------- standings ---------- */
+function stats(teams,played){const s={};teams.forEach(t=>s[t]={t,pl:0,w:0,d:0,l:0,gf:0,ga:0,p:0,gd:0});
+ for(const m of played){if(!(m.h in s&&m.a in s))continue;const H=s[m.h],A=s[m.a];H.pl++;A.pl++;H.gf+=m.hg;H.ga+=m.ag;A.gf+=m.ag;A.ga+=m.hg;
+  if(m.hg>m.ag){H.w++;H.p+=3;A.l++}else if(m.hg<m.ag){A.w++;A.p+=3;H.l++}else{H.d++;A.d++;H.p++;A.p++}}
+ teams.forEach(t=>s[t].gd=s[t].gf-s[t].ga);return s}
+function runs(arr,key){const out=[];for(const x of arr){const k=key(x);if(out.length&&out[out.length-1].k===k)out[out.length-1].items.push(x);else out.push({k,items:[x]})}return out.map(r=>r.items)}
+function rankGroup(g,played){const teams=GR[g],all=stats(teams,played);
+ const alpha=(a,b)=>a.localeCompare(b,'fa');
+ function resolve(run){if(run.length===1)return run;
+  const h=stats(run,played.filter(m=>run.includes(m.h)&&run.includes(m.a)));
+  const sorted=[...run].sort((a,b)=>h[b].p-h[a].p||h[b].gd-h[a].gd||h[b].gf-h[a].gf||alpha(a,b));
+  const rs=runs(sorted,t=>h[t].p+'|'+h[t].gd+'|'+h[t].gf);
+  if(rs.length===1){return [...run].sort((a,b)=>all[b].gd-all[a].gd||all[b].gf-all[a].gf||alpha(a,b))}
+  return rs.flatMap(resolve)}
+ const byPts=[...teams].sort((a,b)=>all[b].p-all[a].p||alpha(a,b));
+ const ordered=runs(byPts,t=>all[t].p).flatMap(resolve);
+ return ordered.map(t=>all[t])}
+function groupPlayed(g){const out=[];M.forEach((m,i)=>{if(m[0]===g&&S.scores[i])out.push({h:m[1],a:m[2],hg:S.scores[i][0],ag:S.scores[i][1]})});return out}
+function groupDone(g){return M.every((m,i)=>m[0]!==g||S.scores[i])}
+const GS=()=>Object.keys(GR);
+const allDone=()=>GS().every(groupDone);
+function thirds(){const rows=GS().map(g=>{const t=rankGroup(g,groupPlayed(g))[2];return{g,...t}});
+ return rows.sort((a,b)=>b.p-a.p||b.gd-a.gd||b.gf-a.gf||a.g.localeCompare(b.g))}
+
+/* ---------- bracket ---------- */
+function resolveBracket(){const ok=allDone();const rk={};GS().forEach(g=>{rk[g]=rankGroup(g,groupPlayed(g))});
+ let alloc=null,qual=[];if(ok){qual=thirds().slice(0,4).map(r=>r.g);alloc=ALLOC[[...qual].sort().join('')]}
+ const slot=s=>{if(s[0]==='1'||s[0]==='2'){const g=s[1],done=groupDone(g);return{team:done?rk[g][+s[0]-1].t:null,label:(s[0]==='1'?'اول ':'دوم ')+GL[g]}}
+  if(s[0]==='T'){if(!alloc)return{team:null,label:THIRD_OF[s]};const idx='ABCD'.indexOf(s[2]);const g=alloc[idx];return{team:rk[g][2].t,label:'سوم '+GL[g]}}};
+ const teams={},win={};
+ for(const id in R16)teams[id]=R16[id].map(slot);
+ const decide=id=>{const t=teams[id].map(x=>x.team);const p=S.ko[id];win[id]=(p&&t.includes(p))?p:null};
+ for(const id in R16)decide(id);
+ for(const id in LATER){teams[id]=LATER[id].map(s=>{const w=win[s.slice(1)];return{team:w,label:'برنده '+s.slice(1)}});decide(id)}
+ return{teams,win,qual,rk}}
+
+/* ---------- build DOM ---------- */
+function buildGroups(){const box=$('groups');
+ GS().forEach(g=>{const c=document.createElement('div');c.className='card';
+  let ms='';M.forEach((m,i)=>{if(m[0]!==g)return;const sc=S.scores[i]||['',''];
+   ms+=`<div class="m"><span class="t">${m[1]}</span><span class="sc"><input id="s${i}h" data-i="${i}" data-s="0" type="number" inputmode="numeric" min="0" max="30" value="${sc[0]}" aria-label="گل‌های ${m[1]}"><span>–</span><input id="s${i}a" data-i="${i}" data-s="1" type="number" inputmode="numeric" min="0" max="30" value="${sc[1]}" aria-label="گل‌های ${m[2]}"></span><span class="t a">${m[2]}</span><span class="meta">${m[3]} · ${m[4]} · ${V[m[5]]}</span></div>`});
+  c.innerHTML=`<h2>گروه ${GL[g]}<small id="gs${g}"></small></h2><div class="tw"><table id="gt${g}"></table></div><div class="ms">${ms}</div>`;box.appendChild(c)});
+ box.addEventListener('input',e=>{const el=e.target;if(!el.dataset||el.dataset.i===undefined)return;const i=+el.dataset.i;
+  const a=$('s'+i+'h').value,b=$('s'+i+'a').value;const ok=v=>/^\d{1,2}$/.test(v);
+  S.scores[i]=(ok(a)&&ok(b))?[+a,+b]:null;save();update()})}
+function renderGroup(g){const rows=rankGroup(g,groupPlayed(g));const done=groupDone(g);const th=thirds();const t3=allDone()?th.slice(0,4).map(r=>r.g):[];
+ let h='<tr><th></th><th style="text-align:start">تیم</th><th>بازی</th><th>برد</th><th>مس</th><th>باخت</th><th>گل زده</th><th>گل خورده</th><th>تفاضل</th><th>امتیاز</th></tr>';
+ rows.forEach((r,i)=>{const cls=done?(i<2?'q1':(i===2?(t3.includes(g)?'q3':''):'')):'';
+  h+=`<tr class="${cls}"><td>${i+1}</td><td class="tn">${r.t}</td><td>${r.pl}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${r.gf}</td><td>${r.ga}</td><td>${r.gd>0?'+'+r.gd:r.gd}</td><td class="pts">${r.p}</td></tr>`});
+ $('gt'+g).innerHTML=h;const n=M.filter((m,i)=>m[0]===g&&S.scores[i]).length;$('gs'+g).textContent=n===6?'کامل':n+' / 6 بازی'}
+function renderThirds(){const th=thirds();const done=allDone();$('thState').textContent=done?'قطعی':'موقت تا پایان همه گروه‌ها';
+ let h='<tr><th></th><th style="text-align:start">تیم</th><th>گروه</th><th>بازی</th><th>تفاضل</th><th>گل زده</th><th>امتیاز</th></tr>';
+ th.forEach((r,i)=>{h+=`<tr class="${done&&i<4?'q1':''}"><td>${i+1}</td><td class="tn">${r.t}</td><td>${GL[r.g]}</td><td>${r.pl}</td><td>${r.gd>0?'+'+r.gd:r.gd}</td><td>${r.gf}</td><td class="pts">${r.p}</td></tr>`});
+ $('thTable').innerHTML=h}
+function renderKO(){const B=resolveBracket();const done=allDone();const nG=S.scores.filter(Boolean).length;
+ $('gate').hidden=done;$('gate').innerHTML=done?'':`نتایج بازی‌های گروهی را کامل کنید (${nG} از 36) تا نام تیم‌ها در دور ۱۶ تیم ظاهر ش
